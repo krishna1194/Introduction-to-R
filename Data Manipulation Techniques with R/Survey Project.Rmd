@@ -1,0 +1,183 @@
+---
+title: "Survey Project"
+output: html_document
+author: Karthick Krishna Balaji
+date: '2022-07-01'
+---
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(stringr)
+library(tidyr)
+
+survey <- read.csv("Get_to_know_survey_2022.csv")
+```
+
+## Question 1
+
+Create a new column called Birth_Month which has only the month portion of Birth_Month_Year.
+
+```{r message=FALSE, warning=FALSE}
+survey <- survey %>% 
+  rowwise() %>%
+  mutate(Birth_Month = str_split(Birth_Month_Year,",")[[1]][1])
+```
+
+## Question 2
+
+Create a new column called Birth_Year which has only the year portion of Birth_Month_Year
+
+```{r message=FALSE, warning=FALSE}
+survey <- survey %>% 
+  rowwise() %>%
+  mutate(Birth_Year = paste(str_split(Birth_Month_Year,", ")[[1]][-1],collapse=" "))
+```
+
+## Question 3
+
+Since the birth month and birth year were open ended fields, there are many inconsistencies in the data. Standardize the values for Birth_Month and Birth_Year.
+
+```{r message=FALSE, warning=FALSE}
+
+survey$Birth_Month <- survey$Birth_Month %>% 
+  str_replace_all(c("12"="December","11"="November","10"="October","9"="September","8"="August","7"="July","6"="June","5"="May","4"="April","3"="March","2"="February","1"="January","Feb"="February","Februaryruary"="February","Setpember" = "September","Septemeber" = "September"))
+
+survey$Birth_Year<-as.numeric(survey$Birth_Year)
+
+survey <- survey%>%
+  mutate_if(is.character, str_trim)
+```
+
+## Question 4
+
+Show the five most frequent birth months, and the five least frequent birth months.
+
+```{r message=FALSE, warning=FALSE}
+
+survey %>%
+  group_by(Birth_Month) %>%
+  summarise(frequency = n()) %>%
+  arrange(desc(frequency)) %>%
+  head(5)
+
+survey %>%
+  group_by(Birth_Month) %>%
+  summarise(frequency = n()) %>%
+  arrange(frequency) %>%
+  head(5)
+```
+
+## Question 5
+
+Show the five most frequent birth years, and the five least frequent birth year.
+
+```{r message=FALSE, warning=FALSE}
+survey%>%
+  group_by(Birth_Year)%>%
+  filter(!is.na(Birth_Year))%>%
+  summarise(Frequency= n())%>%
+  arrange(desc(Frequency))%>%
+  head(5)
+survey%>%
+  group_by(Birth_Year)%>%
+  filter(!is.na(Birth_Year))%>%
+  summarise(Frequency= n())%>%
+  arrange(Frequency)%>%
+  head(5)
+```
+
+## Question 6
+
+The State column was also open ended, so there are many inconsistencies. Clean this column to eliminate any non-US state, and to standardize the values for State.
+
+```{r message=FALSE, warning=FALSE}
+
+survey <- survey %>%
+  transform(survey,State=ifelse((State %in% state.name | State %in% state.abb), State, NA)) %>%
+  transform(survey,State=ifelse((State %in% state.abb), state.name[match(State, state.abb)] ,State))
+
+survey<-survey[,c(1:9)]
+```
+
+## Question 7
+
+Show the five most frequent states, and the five least frequent state
+
+```{r message=FALSE, warning=FALSE}
+survey%>%
+  group_by(State)%>%
+  filter(!is.na(State))%>%
+  summarise(Frequency= n())%>%
+  arrange(desc(Frequency))%>%
+  head(5)
+survey%>%
+  group_by(State)%>%
+  filter(!is.na(State))%>%
+  summarise(Frequency= n())%>%
+  arrange(Frequency)%>%
+  head(5)
+```
+
+## Question 8
+
+Similar to State, the column Country needs to be standardized. Once you standardize it, show the five most frequent countries, and the five least frequent countries.
+
+```{r message=FALSE, warning=FALSE}
+
+survey <- survey %>%
+  separate_rows(Country,sep = "/" ,convert = TRUE) 
+
+survey <- survey %>%
+  transform(survey,Country=ifelse(Country %in% c("USA","United States","United State","USA","US of A","US"), "United States of America",Country))
+
+survey<-survey[,c(1:9)]
+
+survey <- survey%>%
+  mutate_if(is.character, str_trim)
+
+survey%>%
+  group_by(Country)%>%
+  summarise(Frequency= n())%>%
+  arrange(desc(Frequency))%>%
+  head(5)
+survey%>%
+  group_by(Country)%>%
+  summarise(Frequency= n())%>%
+  arrange(Frequency)%>%
+  head(5)
+```
+
+## Question 9
+
+We want to clean the How_Hear_About_Program column by eliminating the number and any extra character portion in those responses (so we keep only the text portion). Show the five most frequent responses to this column.
+
+```{r message=FALSE, warning=FALSE}
+survey$How_Hear_About_Program <- str_replace_all(survey$How_Hear_About_Program, ("^[[:digit:]]. "), "")
+
+survey <- survey%>%
+  mutate_if(is.character, str_trim)
+
+survey%>%
+  group_by(How_Hear_About_Program)%>%
+  summarise(Frequency=n())%>%
+  arrange(desc(Frequency))%>%
+  head(5)
+```
+
+## Question 10
+
+We want to transform the data from wide to long on column Languages by duplicating the values of the other columns. You can use the comma as a separator for Languages. Show the five most frequent languages.
+
+```{r message=FALSE, warning=FALSE}
+survey <- survey %>%
+  separate_rows(Languages,sep = ", ")
+
+survey <- survey%>%
+  mutate_if(is.character, str_trim)
+
+survey%>%
+  group_by(Languages)%>%
+  summarise(Frequency=n())%>%
+  arrange(desc(Frequency))%>%
+  head(5)
+```
