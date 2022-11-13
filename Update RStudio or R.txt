@@ -1,0 +1,11 @@
+Update RStudio/R:
+06/27/2022
+
+R:4.2.0
+RStudio:2022.02.3
+
+To Update R:
+
+install.packages("installr")
+library(installr)
+updateR()
