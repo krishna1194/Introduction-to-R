@@ -5,11 +5,13 @@ This is the code to learn the basics on data manipulation techniques using R.
 
 The concepts covered are: 
 1. Introduction
+
   1.1 - Getting Started with R
 
   1.2 - Variable(Assignment,Finding, and Deleting)
 
 2. Data Structures
+
   2.1 - Vectors
 
   2.2 - List
@@ -23,6 +25,7 @@ The concepts covered are:
   2.6 - Working with different types
 
 3. Programming Fundamentals
+
   3.1 - Logicals
 
   3.2 - Conditionals
@@ -32,6 +35,7 @@ The concepts covered are:
   3.4 - Functions
 
 4. Data Wrangling
+
   4.1 & 4.2 - Libraries, Importing & Exporting Data
 
   4.3 & 4.4 - dplyr and tidyverse & Data manipulation - dplyr basics
