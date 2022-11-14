@@ -5,7 +5,7 @@ This is the code to learn the basics on data manipulation techniques using R.
 
 The concepts covered are: 
 1. Introduction
-  1.1. Getting Started with R
+2. Getting Started with R
 
   1.1 - Getting Started with R
 
