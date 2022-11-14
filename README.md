@@ -23,6 +23,6 @@ The concepts covered are:
   - Libraries, Importing & Exporting Data
   - dplyr and tidyverse & Data manipulation - dplyr basics
   - dplyr - pipe operator & stringr package
-  - Combining Data - dplyr, CheetSheet & Extra-sqldf
+  - Combining Data - dplyr, Extra-sqldf
 
 The folder also contains Lab works that contains the combinations of all the concepts. Along with the project and assessment.
