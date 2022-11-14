@@ -7,19 +7,19 @@ The concepts covered are:
 - Introduction
   - Getting Started with R
   - Variable(Assignment,Finding, and Deleting)
- - Data Structures
+- Data Structures
   - Vectors
   - List
   - Arrays
   - Matrices
   - DataFrames
   - Working with different types
- - Programming Fundamentals
+- Programming Fundamentals
   - Logicals
   - Conditionals
   - Loops
   - Functions
- - Data Wrangling
+- Data Wrangling
   - Libraries, Importing & Exporting Data
   - dplyr and tidyverse & Data manipulation - dplyr basics
   - dplyr - pipe operator & stringr package
