@@ -4,10 +4,8 @@
 This is the code to learn the basics on data manipulation techniques using R. 
 
 The concepts covered are: 
-1. Introduction
-2. Getting Started with R
-
-  1.1 - Getting Started with R
+- Introduction
+  - Getting Started with R
 
   1.2 - Variable(Assignment,Finding, and Deleting)
 
